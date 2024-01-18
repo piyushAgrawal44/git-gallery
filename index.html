@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="Explore a gallery of GitHub repositories with GitGallery. Discover trending projects, frameworks, and tools. Find valuable open source code resources and stay updated with the latest in the coding community.">
+  <meta name="keywords"
+    content="GitGallery, GitHub repo gallery, open source projects, code exploration, trending repositories, developer tools, code showcase, GitHub directory, coding community, version control">
+  <meta name="author" content="Your Name">
+
+  <!-- Title should be concise and contain relevant keywords -->
+  <title>GitGallery - Explore GitHub Repositories</title>
+
+  <!-- Open Graph Meta Tags for social media sharing -->
+  <meta property="og:title" content="GitGallery - Explore GitHub Repositories">
+  <meta property="og:description"
+    content="Explore a gallery of GitHub repositories with GitGallery. Discover trending projects, frameworks, and tools.">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card Meta Tags for Twitter sharing -->
+  <meta name="twitter:title" content="GitGallery - Explore GitHub Repositories">
+  <meta name="twitter:description"
+    content="Explore a gallery of GitHub repositories with GitGallery. Discover trending projects, frameworks, and tools.">
+
+  <!-- Favicon for your website -->
+  <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
+  <title>GitGallery - Github repo listing page</title>
+
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+
+  <!-- bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- bootstrap icons  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+  <!-- custom css -->
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body class="text-white">
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="my-5 d-flex justify-content-center">
+          <div class="input-group  max-width-400">
+            <span class="input-group-text"><i class="bi bi-github"></i></span>
+            <input type="text" class="form-control outline-none" id="username" placeholder="Type Github Username..."
+              aria-label="Username" aria-describedby="username" value="piyushAgrawal44">
+          </div>
+        </div>
+
+        <div class="row " id="details">
+          <div class="col-12 col-md-4 text-center mb-3">
+            <div class="bg-light-dark about">
+              <h5 class="text-start mb-3"><u>About:</u></h5>
+              <div class=" "
+                style="border-radius: 20px; max-width: fit-content; background-color: #45434C; padding: 20px; margin: auto;">
+                <img src="https://avatars.githubusercontent.com/u/1580956?v=4" class="img-fluid"
+                  style="max-width: 100px; border-radius: 50%;" id="avatarImg" alt="avatar">
+              </div>
+              <h5 class="mt-2 name text-light" id="name">John Deo</h5>
+
+              <p class="text-start" style="font-size: 12px;">
+                Passionate coder exploring new technologies and building innovative solutions. Open to collaboration and
+                continuous learning. Connect with me on GitHub!
+              </p>
+
+              <div class="d-flex justify-content-between mb-2" style="font-size: 12px;">
+                <span class="my-1 ">Followers: 200</span>
+                <span class="my-1 ">Public Repo: 38</span>
+              </div>
+
+              <hr style="background-color: white; height: 2px;" />
+
+              <div class="d-flex gap-2 text-light align-items-center mb-3">
+                <div style="border: 1px solid #6D7EAC; border-radius: 10px; padding: 6px 10px;">
+                  <i class="bi bi-github"></i>
+                </div>
+                <div class="text-start" style="font-size: 12px;">
+                  <span class="d-block" style="color: rgb(170, 170, 170);">GITHUB URL</span>
+                  <span class="d-block">test@gmail.com</span>
+                </div>
+              </div>
+
+              <div class="mt-2 d-flex gap-2 text-light align-items-center mb-3">
+                <div style="border: 1px solid #6D7EAC; border-radius: 10px; padding: 6px 10px;">
+                  <i class="bi bi-envelope"></i>
+                </div>
+                <div class="text-start" style="font-size: 12px;">
+                  <span class="d-block" style="color: rgb(170, 170, 170);">EMAIL</span>
+                  <span class="d-block">test@gmail.com</span>
+                </div>
+              </div>
+
+              <div class="d-flex gap-2 text-light align-items-center mb-3">
+                <div style="border: 1px solid #6D7EAC; border-radius: 10px; padding: 6px 10px;">
+                  <i class="bi bi-geo-alt"></i>
+                </div>
+                <div class="text-start" style="font-size: 12px;">
+                  <span class="d-block" style="color: rgb(170, 170, 170);">LOCATION</span>
+                  <span class="d-block">Dehli, India</span>
+                </div>
+              </div>
+
+
+
+            </div>
+
+
+          </div>
+          <div class="col-12 col-md-8 mb-3">
+
+            <div class="bg-light-dark w-auto" style="position: relative;">
+              <h5 class="text-start mb-3"><u>Repositories:</u></h5>
+
+              <div class="repos" id="repoList">
+                <div class="repo" style="font-size: 12px;">
+                  <h6>Repo Name</h6>
+                  <span>Description</span>
+
+                  <div class="mt-2">
+                    <a href="" class="text-decoration-none"><i class="bi bi-link-45deg"></i>
+                      link</a>
+                  </div>
+                  <div class="mt-2 d-flex gap-2 w-auto" style="overflow-x: auto;">
+                    <span class="p-1 rounded-pill border border-1 border-white">CSS</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="d-flex justify-content-center mt-4" >
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination" style="display: flex; flex-wrap: wrap;" id="pagination">
+                    <li class="page-item" id="prevPage" onclick="changePage(-1)">
+                      <a class="page-link" href="#repoList" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#repoList">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#repoList">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#repoList">3</a></li>
+                    <li class="page-item" id="nextPage" onclick="changePage(1)">
+                      <a class="page-link" href="#repoList" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- loader -->
+        <div class="d-flex align-items-center justify-content-center d-none" style="height: auto;" id="loader">
+          <div class="loader"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="success-toast" class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body text-dark" id="success-toast-message">
+          Something went wrong.
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="error-toast" class="toast bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body text-light" id="error-toast-message">
+          Something went wrong.
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script>
+    const toastLiveExample = document.getElementById('error-toast');
+    const repoListElement = document.getElementById('repoList');
+    const paginationElement = document.getElementById('pagination');
+
+    let page = 1;
+    const perPage = 10;
+
+    function fetchUserDetails(){
+      fetch(`https://api.github.com/users/${username}`).then(res => res.json()).then(data => {
+        
+        if (data.message === 'Not Found') {
+          document.getElementById("error-toast-message").innerText = "Username is invalid";
+          const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+          toastBootstrap.show();
+          return 0;
+        }
+
+
+      });
+    }
+
+    async function fetchRepos() {
+      const username = document.getElementById('username').value.trim();
+
+      const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=${perPage}&page=${page}`);
+      const repos = await response.json();
+      return repos;
+    }
+
+    async function totalRepos() {
+      const username = document.getElementById('username').value.trim();
+
+      const response = await fetch(`https://api.github.com/users/${username}`);
+      const userData = await response.json();
+
+      if (response.ok) {
+        return userData.public_repos;
+      } else {
+        document.getElementById("error-toast-message").innerText = "Please enter valid username to search";
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+        toastBootstrap.show()
+        return 0;
+      }
+
+      
+    }
+
+    async function displayRepos() {
+      const username = document.getElementById('username').value.trim();
+
+      if (username == "") {
+        document.getElementById("error-toast-message").innerText = "Please enter valid username to search";
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+        toastBootstrap.show()
+        return 0;
+      }
+
+
+      const detailsElement = document.getElementById("details");
+      const loaderElement = document.getElementById("loader");
+
+      detailsElement.classList.toggle("d-none");
+      loaderElement.classList.toggle("d-none");
+
+
+      const repos = await fetchRepos();
+      repoListElement.innerHTML = '';
+
+      let htmlStr = "";
+      repos.forEach(repo => {
+        htmlStr += `
+          <div class="repo" style="font-size: 12px;">
+            <h6>${repo.name}</h6>
+            <span>${repo.description ?? 'Not Available'}</span>
+
+            <div class="mt-2">
+              <a href="${repo.html_url}" target="_blank" class="text-decoration-none"><i class="bi bi-link-45deg"></i>
+                link</a>
+            </div>
+        `;
+
+        if (repo.topics.length > 0) {
+          htmlStr += `<div class="mt-2 d-flex gap-2 w-auto" style="overflow-x: auto;">`;
+
+          repo.topics.map(topic => {
+            htmlStr += `<span class="p-1 rounded-pill border border-1 border-white">${topic}</span>`;
+          });
+
+          htmlStr += `
+            </div>
+        `;
+        }
+        htmlStr += `</div>`;
+      });
+      repoListElement.innerHTML = htmlStr;
+
+      detailsElement.classList.toggle("d-none");
+      loaderElement.classList.toggle("d-none");
+
+      updatePagination();
+
+    }
+
+    async function updatePagination() {
+
+      const totalCnt = await totalRepos();
+      const totalPages = Math.ceil(totalCnt / perPage);
+
+      // Generate pagination pages
+      paginationElement.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement('li');
+
+        if (i == 1) {
+          li.className = 'page-item mb-1';
+          li.id = "prevPage";
+          li.innerHTML = `<a class="page-link" href="#repoList" onclick="changePage(${i})" aria-label="Prev">First</a>`;
+        }
+        else if (i == totalPages) {
+          li.className = 'page-item mb-1';
+          li.id = "nextPage";
+          li.innerHTML = `<a class="page-link" href="#repoList" onclick="changePage(${i})" aria-label="Next">Last</a>`;
+        }
+        else {
+          li.className = `page-item mb-1 ${page == i ? 'active' : ''}`;
+          li.innerHTML = `<a class="page-link" href="#repoList" onclick="changePage(${i})">${i - 1}</a>`;
+        }
+        paginationElement.appendChild(li);
+
+      }
+
+      const prevPageElement = document.getElementById('prevPage');
+      const nextPageElement = document.getElementById('nextPage');
+
+      // Enable or disable the "Previous" button based on whether there's a previous page
+      prevPageElement.classList.toggle('disabled', page === 1);
+
+      // Enable or disable the "Next" button based on whether there's a next page
+      nextPageElement.classList.toggle('disabled', page == totalPages); // GitHub API limitation
+    }
+
+    function changePage(pageDelta) {
+      page = pageDelta;
+      displayRepos();
+    }
+
+    displayRepos();
+
+    let typingTimer;
+    let usernameInput = document.getElementById('username');
+
+    usernameInput.addEventListener('input', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(function () {
+        displayRepos();
+      }, 1000);
+    });
+
+
+
+
+
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
