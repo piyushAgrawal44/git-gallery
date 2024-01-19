@@ -1,3 +1,5 @@
+
+
 const toastLiveExample = document.getElementById('error-toast');
 const repoListElement = document.getElementById('repoList');
 const paginationElement = document.getElementById('pagination');
@@ -5,7 +7,19 @@ const noUserElement = document.getElementById('no-user-found');
 const detailsElement = document.getElementById("details");
 const loaderElement = document.getElementById("loader");
 const queryInput = document.getElementById('query');
-const usernameInput = document.getElementById('username')
+const usernameInput = document.getElementById('username');
+
+
+const currentUrl = window.location.search;
+const urlParams = new URLSearchParams(currentUrl);
+
+
+const queryUsername = urlParams.get('username');
+if(queryUsername!=null && queryUsername!=""){
+    usernameInput.value=queryUsername.trim();
+}
+
+
 let typingTimer1;
 let typingTimer2;
 
@@ -149,6 +163,7 @@ async function updatePagination() {
 
     // Generate pagination pages
     paginationElement.innerHTML = '';
+    let dotCount=0;
     for (let i = 1; i <= totalPages; i++) {
         const li = document.createElement('li');
         li.className = `page-item mb-1 ${page == i ? 'active' : ''}`;
@@ -160,6 +175,20 @@ async function updatePagination() {
 
             li.id = "nextPage";
 
+        }
+        else{
+            if (totalPages > 10) {
+                if ((i > (page + 2) || i < (page - 2)) && i < (totalPages - 1)) {
+                    if (dotCount < 3) {
+                        li.innerHTML = `<span class="page-link"  >.</span>`;
+                        paginationElement.appendChild(li);
+                        dotCount++;
+                    }
+                    continue;
+                }
+
+
+            }
         }
 
         li.innerHTML = `<a class="page-link" href="#repoList" onclick="changePage(${i})" >${i}</a>`;
