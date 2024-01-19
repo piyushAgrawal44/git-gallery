@@ -122,11 +122,11 @@
             <div class="bg-light-dark w-auto" style="position: relative;">
               <div class="mb-3 d-grid d-sm-flex gap-2 justify-content-between align-self-center align-items-center">
                 <h5 class="text-start" style="flex-shrink: 0;"><u>Repositories:</u></h5>
-                
+
                 <div class="input-group flex-nowrap" style="max-width: 250px;">
                   <span class="input-group-text" id="addon-wrapping">🔍</span>
-                  <input type="search" class="form-control" id="query"
-                  placeholder="Type repo name..." aria-label="search query">
+                  <input type="search" class="form-control" id="query" placeholder="Type repo name..."
+                    aria-label="search query">
                 </div>
               </div>
 
@@ -154,6 +154,20 @@
                   </ul>
                 </nav>
               </div>
+              <div class="d-flex justify-content-center align-items-center gap-2 mt-2">
+                <span>Per Page:</span>
+                <div class="" style="max-width: 250px;">
+                  <select class="form-select" aria-label="Per page" onchange="setPerPage(this)">
+                    <option selected value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+
+                </div>
+              </div>
+
+
             </div>
           </div>
         </div>
@@ -163,7 +177,7 @@
         </div>
 
         <!-- loader -->
-        <div class="loader-div"  id="loader">
+        <div class="loader-div" id="loader">
           <div class="loader"></div>
         </div>
       </div>

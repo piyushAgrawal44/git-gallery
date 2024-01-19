@@ -13,7 +13,7 @@ let reposReference = [];
 let repos = [];
 
 let page = 1;
-const perPage = 10;
+let perPage = 10;
 
 function fetchUserDetails() {
     
@@ -47,8 +47,9 @@ function fetchUserDetails() {
             // fetch repo
             await displayRepos();
             // hide loader
-            detailsElement.classList.remove("d-none");
+            noUserElement.classList.add("d-none");
             loaderElement.classList.add("d-none");
+            detailsElement.classList.remove("d-none");
         }
     });
 }
@@ -90,8 +91,13 @@ async function displayRepos() {
         return 0;
     }
     else {
+       
+        loaderElement.classList.remove("d-none");
 
         await fetchRepos();
+
+       
+        loaderElement.classList.add("d-none");
 
         repoListElement.innerHTML = '';
 
@@ -100,7 +106,7 @@ async function displayRepos() {
             htmlStr += `
           <div class="repo " style="font-size: 12px;">
             <h6 class="text-overflow-ellipsis" data-bs-toggle="tooltip" data-bs-placement="top" title="${repo.name}">${repo.name}</h6>
-            <span>${repo.description ?? ''}</span>
+            <span>${repo.description ?? 'Github Repo'}</span>
 
             <div class="mt-2">
               <a href="${repo.html_url}" target="_blank" class="text-decoration-none"><i class="bi bi-link-45deg"></i>
@@ -231,7 +237,7 @@ async function searchUserRepositories() {
             htmlStr += `<div class="mt-2 d-flex gap-2 w-auto" style="overflow-x: auto;">`;
 
             repo.topics.map(topic => {
-                htmlStr += `<span class="p-1 rounded-pill border border-1 border-white">${topic}</span>`;
+                htmlStr += `<span class="p-1 rounded-pill border border-1 border-white" style="min-width:fit-content;">${topic}</span>`;
             });
 
             htmlStr += `
@@ -249,6 +255,12 @@ async function searchUserRepositories() {
     repoListElement.innerHTML = htmlStr;
 }
 
+
+function setPerPage(select){
+    page=1;
+    perPage=select.value;
+    displayRepos();
+}
 
 usernameInput.addEventListener('input', function () {
     clearTimeout(typingTimer2);
