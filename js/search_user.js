@@ -43,6 +43,7 @@ async function fetchUsers() {
 
 
 async function displayUsers() {
+    
     const username = document.getElementById('username').value.trim();
 
     if (username == "") {
@@ -166,6 +167,7 @@ displayUsers();
 
 
 function copyMyId() {
+    page = 1;
     document.getElementById('username').value = "piyush";
     displayUsers();
 }
@@ -181,6 +183,7 @@ function setPerPage(select) {
 usernameInput.addEventListener('input', function () {
     clearTimeout(typingTimer2);
     typingTimer2 = setTimeout(function () {
+        page = 1;
         displayUsers();
     }, 1500);
 });
