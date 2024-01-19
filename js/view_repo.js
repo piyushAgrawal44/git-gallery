@@ -15,8 +15,8 @@ const urlParams = new URLSearchParams(currentUrl);
 
 
 const queryUsername = urlParams.get('username');
-if(queryUsername!=null && queryUsername!=""){
-    usernameInput.value=queryUsername.trim();
+if (queryUsername != null && queryUsername != "") {
+    usernameInput.value = queryUsername.trim();
 }
 
 
@@ -30,7 +30,7 @@ let page = 1;
 let perPage = 10;
 
 function fetchUserDetails() {
-    
+
     detailsElement.classList.add("d-none");
     noUserElement.classList.add("d-none");
     loaderElement.classList.remove("d-none");
@@ -45,7 +45,7 @@ function fetchUserDetails() {
             loaderElement.classList.add("d-none");
             detailsElement.classList.add("d-none");
             noUserElement.classList.remove("d-none");
-            
+
         }
         else {
             document.getElementById('avatarImg').src = data.avatar_url;
@@ -53,9 +53,9 @@ function fetchUserDetails() {
             document.getElementById('bio').innerText = data.bio ?? '';
             document.getElementById('followers').innerText = data.followers ?? 0;
             document.getElementById('total_repos').innerText = data.public_repos ?? 0;
-            document.getElementById('emailid').innerHTML = `<a data-bs-toggle="tooltip" data-bs-placement="top" title="${data.email}" class="text-decoration-none" href="mailto:${data.email}">${data.email ?? "NA"}<a/>`;
-            document.getElementById('githuburl').innerHTML = `<a data-bs-toggle="tooltip" data-bs-placement="top" title="${data.html_url}" class="text-decoration-none" href="${data.html_url}">@${data.login}<a/>`;
-            document.getElementById('location').innerText = data.location ?? 'NA';
+            document.getElementById('emailid').innerHTML = `<a data-bs-toggle="tooltip" data-bs-placement="top" title="${data.email}" class="text-decoration-none" href="mailto:${data.email}">${data.email ?? "NA"}</a>`;
+            document.getElementById('githuburl').innerHTML = `<a data-bs-toggle="tooltip" data-bs-placement="top" title="${data.html_url}" class="text-decoration-none" href="${data.html_url}">@${data.login}</a>`;
+            document.getElementById('location').innerHTML = `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${data.location}" class="text-decoration-none" >${data.location ?? "NA"}</span>`;
             // clean query search bar
             queryInput.value = "";
             // fetch repo
@@ -105,12 +105,12 @@ async function displayRepos() {
         return 0;
     }
     else {
-       
+
         loaderElement.classList.remove("d-none");
 
         await fetchRepos();
 
-       
+
         loaderElement.classList.add("d-none");
 
         repoListElement.innerHTML = '';
@@ -158,12 +158,14 @@ async function displayRepos() {
 
 async function updatePagination() {
 
-    const totalCnt = await totalRepos();
+    let totalCnt = await totalRepos();
+    totalCnt = totalCnt > 1000 ? 1000 : totalCnt;
     const totalPages = Math.ceil(totalCnt / perPage);
 
     // Generate pagination pages
     paginationElement.innerHTML = '';
-    let dotCount=0;
+    let dotCount1 = 0;
+    let dotCount2 = 0;
     for (let i = 1; i <= totalPages; i++) {
         const li = document.createElement('li');
         li.className = `page-item mb-1 ${page == i ? 'active' : ''}`;
@@ -176,13 +178,21 @@ async function updatePagination() {
             li.id = "nextPage";
 
         }
-        else{
+        else {
             if (totalPages > 10) {
-                if ((i > (page + 2) || i < (page - 2)) && i < (totalPages - 1)) {
-                    if (dotCount < 3) {
+                if ((i < (page - 2)) && i < (totalPages - 1)) {
+                    if (dotCount1 < 3) {
                         li.innerHTML = `<span class="page-link"  >.</span>`;
                         paginationElement.appendChild(li);
-                        dotCount++;
+                        dotCount1++;
+                    }
+                    continue;
+                }
+                if (((i > (page + 2))) && i < (totalPages - 1)) {
+                    if (dotCount2 < 3) {
+                        li.innerHTML = `<span class="page-link"  >.</span>`;
+                        paginationElement.appendChild(li);
+                        dotCount2++;
                     }
                     continue;
                 }
@@ -191,7 +201,7 @@ async function updatePagination() {
             }
         }
 
-        li.innerHTML = `<a class="page-link" href="#repoList" onclick="changePage(${i})" >${i}</a>`;
+        li.innerHTML = `<a class="page-link cursor-pointer"  href="javascript:void(0)" onclick="changePage(${i})" >${i}</a>`;
         paginationElement.appendChild(li);
 
     }
@@ -285,9 +295,9 @@ async function searchUserRepositories() {
 }
 
 
-function setPerPage(select){
-    page=1;
-    perPage=select.value;
+function setPerPage(select) {
+    page = 1;
+    perPage = select.value;
     displayRepos();
 }
 

@@ -19,9 +19,12 @@ async function fetchUsers() {
     const username = document.getElementById('username').value.trim();
 
     const response = await fetch(`https://api.github.com/search/users?q=${encodeURIComponent(username)}&per_page=${perPage}&page=${page}`);
-
+    
     if (response.ok) {
         users = await response.json();
+        if(users.total_count>1000){
+            users.total_count=1000; // limited by github
+        }
         usersReference = users;
     } else {
         users = {
@@ -70,7 +73,7 @@ async function displayUsers() {
         else {
 
             let htmlStr = "";
-
+            
             users.items.map(data => {
                 htmlStr += `
                 <div class="bg-light-dark about text-center" style="max-width: 100%;">
@@ -107,7 +110,8 @@ async function updatePagination() {
 
     // Generate pagination pages
     paginationElement.innerHTML = '';
-    let dotCount = 0;
+    let dotCount1 = 0;
+    let dotCount2 = 0;
     for (let i = 1; i <= totalPages; i++) {
         const li = document.createElement('li');
         li.className = `page-item mb-1 ${page == i ? 'active' : ''}`;
@@ -122,11 +126,19 @@ async function updatePagination() {
         }
         else {
             if (totalPages > 10) {
-                if ((i > (page + 2) || i < (page - 2)) && i < (totalPages - 1)) {
-                    if (dotCount < 3) {
+                if ( (i < (page - 2)) && i < (totalPages - 1)) {
+                    if (dotCount1 < 3) {
                         li.innerHTML = `<span class="page-link"  >.</span>`;
                         paginationElement.appendChild(li);
-                        dotCount++;
+                        dotCount1++;
+                    }
+                    continue;
+                }
+                if ( ((i > (page + 2)) ) && i < (totalPages - 1)) {
+                    if (dotCount2 < 3) {
+                        li.innerHTML = `<span class="page-link"  >.</span>`;
+                        paginationElement.appendChild(li);
+                        dotCount2++;
                     }
                     continue;
                 }
