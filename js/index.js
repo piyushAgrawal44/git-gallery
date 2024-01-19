@@ -98,7 +98,7 @@ async function displayRepos() {
         let htmlStr = "";
         repos.forEach(repo => {
             htmlStr += `
-          <div class="repo" style="font-size: 12px;">
+          <div class="repo " style="font-size: 12px;">
             <h6 class="text-overflow-ellipsis" data-bs-toggle="tooltip" data-bs-placement="top" title="${repo.name}">${repo.name}</h6>
             <span>${repo.description ?? ''}</span>
 
