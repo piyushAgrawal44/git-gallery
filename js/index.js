@@ -109,10 +109,10 @@ async function displayRepos() {
         `;
 
             if (repo.topics.length > 0) {
-                htmlStr += `<div class="mt-2 d-flex gap-2 w-auto" style="overflow-x: auto;">`;
+                htmlStr += `<div class="mt-2 d-flex gap-2 w-auto hide-scrollbar" style="overflow-x: auto;">`;
 
                 repo.topics.map(topic => {
-                    htmlStr += `<span class="p-1 rounded-pill border border-1 border-white">${topic}</span>`;
+                    htmlStr += `<span class="p-1 text-center rounded-pill border border-1 border-white" style="min-width:fit-content">${topic}</span>`;
                 });
 
                 htmlStr += `
