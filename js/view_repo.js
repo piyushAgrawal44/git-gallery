@@ -38,8 +38,10 @@ function fetchUserDetails() {
     const username = document.getElementById('username').value.trim();
     fetch(`https://api.github.com/users/${username}`).then(res => res.json()).then(async (data) => {
 
-        if (data.message === 'Not Found') {
-            document.getElementById("error-toast-message").innerText = "Username is invalid";
+        if (data.message !== undefined) {
+
+            document.getElementById("error-toast-message").innerText = data.message;
+
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
             toastBootstrap.show();
             loaderElement.classList.add("d-none");
@@ -75,25 +77,22 @@ async function fetchRepos() {
     repos = await response.json();
     reposReference = repos;
 
-}
+    if (repos.message !== undefined) {
 
-async function totalRepos() {
-    const username = document.getElementById('username').value.trim();
-
-    const response = await fetch(`https://api.github.com/users/${username}`);
-    const userData = await response.json();
-
-    if (response.ok && userData.message != 'Not Found') {
-        return userData.public_repos;
-    } else {
-        document.getElementById("error-toast-message").innerText = "Please enter valid username to search";
+        document.getElementById("error-toast-message").innerText = reposReference.message;
         const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-        toastBootstrap.show()
-        return 0;
+        toastBootstrap.show();
+        repos = {
+            total_count: 0,
+            items: []
+        };
+        reposReference = repos;
     }
 
 
 }
+
+
 
 async function displayRepos() {
     const username = document.getElementById('username').value.trim();
@@ -146,13 +145,38 @@ async function displayRepos() {
             htmlStr += "<span>No repo found...</span>"
         }
 
-
         repoListElement.innerHTML = htmlStr;
 
 
 
         updatePagination();
     }
+
+}
+async function totalRepos() {
+    const username = document.getElementById('username').value.trim();
+
+    const response = await fetch(`https://api.github.com/users/${username}`);
+    const userData = await response.json();
+
+    if (response.ok) {
+        return userData.public_repos;
+    } else {
+        if (userData.message !== undefined) {
+
+            document.getElementById("error-toast-message").innerText = userData.message;
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastBootstrap.show();
+        }
+        else {
+            document.getElementById("error-toast-message").innerText = "Please enter valid username to search";
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastBootstrap.show()
+
+        }
+        return 0;
+    }
+
 
 }
 

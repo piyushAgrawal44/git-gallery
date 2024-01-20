@@ -1,7 +1,6 @@
 const toastLiveExample = document.getElementById('error-toast');
 
 const paginationElement = document.getElementById('pagination');
-const noUserElement = document.getElementById('no-user-found');
 const usersElement = document.getElementById("users");
 const loaderElement = document.getElementById("loader");
 const queryInput = document.getElementById('query');
@@ -19,23 +18,35 @@ async function fetchUsers() {
     const username = document.getElementById('username').value.trim();
 
     const response = await fetch(`https://api.github.com/search/users?q=${encodeURIComponent(username)}&per_page=${perPage}&page=${page}`);
-    
+
     if (response.ok) {
         users = await response.json();
-        if(users.total_count>1000){
-            users.total_count=1000; // limited by github
+
+        if (users.total_count > 1000) {
+            users.total_count = 1000; // limited by github
         }
         usersReference = users;
+
     } else {
+        users = await response.json();
+
+        if (users.message != undefined) {
+            
+            document.getElementById("error-toast-message").innerText = users.message+" Please try again later.";
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastBootstrap.show();
+        }
+        else {
+            document.getElementById("error-toast-message").innerText = "No user found...";
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastBootstrap.show()
+        }
+
         users = {
             total_count: 0,
             items: []
         };
         usersReference = users;
-        document.getElementById("error-toast-message").innerText = "No user found...";
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-        toastBootstrap.show()
-        return 0;
     }
 
 
@@ -43,7 +54,7 @@ async function fetchUsers() {
 
 
 async function displayUsers() {
-    
+
     const username = document.getElementById('username').value.trim();
 
     if (username == "") {
@@ -55,28 +66,19 @@ async function displayUsers() {
     else {
 
         usersElement.classList.add("d-none");
-        noUserElement.classList.add("d-none");
+        
         loaderElement.classList.remove("d-none");
         paginationElement.innerHTML = '';
 
         await fetchUsers();
 
 
-        if (users.items.length === 0) {
-            document.getElementById("error-toast-message").innerText = "No user found for given name";
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-            toastBootstrap.show();
-            loaderElement.classList.add("d-none");
-            usersElement.classList.add("d-none");
-            noUserElement.classList.remove("d-none");
 
-        }
-        else {
 
-            let htmlStr = "";
-            
-            users.items.map(data => {
-                htmlStr += `
+        let htmlStr = "";
+
+        users.items.map(data => {
+            htmlStr += `
                 <div class="bg-light-dark about text-center" style="max-width: 100%;">
                    <a class="text-decoration-none" href="./view_repo.html?username=${data.login}">
                     <div 
@@ -90,14 +92,19 @@ async function displayUsers() {
 
                 </div>
                 `;
-            });
+        });
 
-            usersElement.innerHTML = htmlStr;
-            noUserElement.classList.add("d-none");
-            loaderElement.classList.add("d-none");
-            usersElement.classList.remove("d-none");
+        if (users.items.length === 0) {
+            htmlStr += "<span>No user found...</span>"
 
         }
+
+        usersElement.innerHTML = htmlStr;
+
+        loaderElement.classList.add("d-none");
+        usersElement.classList.remove("d-none");
+
+
 
         updatePagination();
     }
@@ -127,7 +134,7 @@ async function updatePagination() {
         }
         else {
             if (totalPages > 10) {
-                if ( (i < (page - 2)) && i < (totalPages - 1)) {
+                if ((i < (page - 2)) && i < (totalPages - 1)) {
                     if (dotCount1 < 3) {
                         li.innerHTML = `<span class="page-link"  >.</span>`;
                         paginationElement.appendChild(li);
@@ -135,7 +142,7 @@ async function updatePagination() {
                     }
                     continue;
                 }
-                if ( ((i > (page + 2)) ) && i < (totalPages - 1)) {
+                if (((i > (page + 2))) && i < (totalPages - 1)) {
                     if (dotCount2 < 3) {
                         li.innerHTML = `<span class="page-link"  >.</span>`;
                         paginationElement.appendChild(li);
