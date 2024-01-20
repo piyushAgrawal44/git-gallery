@@ -31,8 +31,8 @@ async function fetchUsers() {
         users = await response.json();
 
         if (users.message != undefined) {
-            
-            document.getElementById("error-toast-message").innerText = users.message+" Please try again later.";
+
+            document.getElementById("error-toast-message").innerText = users.message + " Please try again later.";
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
             toastBootstrap.show();
         }
@@ -66,7 +66,7 @@ async function displayUsers() {
     else {
 
         usersElement.classList.add("d-none");
-        
+
         loaderElement.classList.remove("d-none");
         paginationElement.innerHTML = '';
 
@@ -120,46 +120,44 @@ async function updatePagination() {
     paginationElement.innerHTML = '';
     let dotCount1 = 0;
     let dotCount2 = 0;
+    const li = document.createElement('li');
+    li.className = `page-item mb-1 ${page == 1 ? 'disabled' : ''}`;
+    li.innerHTML = `<a class="page-link cursor-pointer"  href="javascript:void(0)" onclick="changePage(${(page - 1) < 0 ? 0 : (page - 1)})" >Prev</a>`;
+    paginationElement.appendChild(li);
+
     for (let i = 1; i <= totalPages; i++) {
         const li = document.createElement('li');
         li.className = `page-item mb-1 ${page == i ? 'active' : ''}`;
-        if (i == 1) {
 
-            li.id = "prevPage";
-        }
-        else if (i == totalPages) {
-
-            li.id = "nextPage";
-
-        }
-        else {
-            if (totalPages > 10) {
-                if ((i < (page - 2)) && i < (totalPages - 1)) {
-                    if (dotCount1 < 3) {
-                        li.innerHTML = `<span class="page-link"  >.</span>`;
-                        paginationElement.appendChild(li);
-                        dotCount1++;
-                    }
-                    continue;
+        if (totalPages > 7) {
+            if ((i < (page - 2)) && i > 1) {
+                if (dotCount1 < 1) {
+                    li.innerHTML = `<span class="page-link"  >...</span>`;
+                    paginationElement.appendChild(li);
+                    dotCount1++;
                 }
-                if (((i > (page + 2))) && i < (totalPages - 1)) {
-                    if (dotCount2 < 3) {
-                        li.innerHTML = `<span class="page-link"  >.</span>`;
-                        paginationElement.appendChild(li);
-                        dotCount2++;
-                    }
-                    continue;
-                }
-
-
+                continue;
             }
+            if (((i > (page + 2))) && i < (totalPages - 1)) {
+                if (dotCount2 < 1) {
+                    li.innerHTML = `<span class="page-link"  >...</span>`;
+                    paginationElement.appendChild(li);
+                    dotCount2++;
+                }
+                continue;
+            }
+
         }
 
         li.innerHTML = `<a class="page-link cursor-pointer"  href="javascript:void(0)" onclick="changePage(${i})" >${i}</a>`;
+
         paginationElement.appendChild(li);
 
     }
-
+    const li2 = document.createElement('li');
+    li2.className = `page-item mb-1 ${page == totalPages ? 'disabled' : ''}`;
+    li2.innerHTML = `<a class="page-link cursor-pointer"  href="javascript:void(0)" onclick="changePage(${(page + 1) > totalPages ? totalPages : (page + 1)})" >Next</a>`;
+    paginationElement.appendChild(li2);
 
 }
 
