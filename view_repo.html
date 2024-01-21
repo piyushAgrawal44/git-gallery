@@ -66,7 +66,8 @@
               <h5 class="text-start mb-3"><u>About:</u></h5>
               <div class=" "
                 style="border-radius: 20px; max-width: fit-content; background-color: #45434C; padding: 20px; margin: auto;">
-                <img src="" class="img-fluid" style="max-width: 100px; border-radius: 50%;" id="avatarImg" alt="avatar">
+                <img src="" class="img-fluid" style="max-width: 100px; border-radius: 50%; display: none;" id="avatarImg" alt="avatar">
+                <div class="loader" id="imgLoader" style="display: block;"></div>
               </div>
               <h5 class="mt-2 name text-light" id="name"></h5>
 
@@ -85,7 +86,7 @@
                 <div class="social_icons">
                   📂
                 </div>
-                <div class="text-start social_links" >
+                <div class="text-start social_links">
                   <span class="d-block" style="color: rgb(170, 170, 170);">GITHUB URL</span>
                   <span class="d-block text-overflow-ellipsis" id="githuburl"></span>
                 </div>
@@ -95,7 +96,7 @@
                 <div class="social_icons">
                   📬
                 </div>
-                <div class="text-start social_links" >
+                <div class="text-start social_links">
                   <span class="d-block" style="color: rgb(170, 170, 170);">EMAIL</span>
                   <span class="d-block text-overflow-ellipsis" id="emailid"></span>
                 </div>
@@ -130,7 +131,7 @@
                 </div>
               </div>
 
-              <div class="repos hide-scrollbar" id="repoList">
+              <div class="contentDiv hide-scrollbar" id="repoList">
 
 
               </div>
@@ -138,7 +139,7 @@
               <div class="d-flex justify-content-center mt-4">
                 <nav aria-label="Page navigation example">
                   <ul class="pagination" style="display: flex; flex-wrap: wrap;" id="pagination">
-                  
+
                   </ul>
                 </nav>
               </div>

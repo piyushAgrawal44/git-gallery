@@ -4,7 +4,8 @@ const paginationElement = document.getElementById('pagination');
 const usersElement = document.getElementById("users");
 const loaderElement = document.getElementById("loader");
 const queryInput = document.getElementById('query');
-const usernameInput = document.getElementById('username')
+const usernameInput = document.getElementById('username');
+const detailsElement = document.getElementById("details");
 let typingTimer1;
 let typingTimer2;
 
@@ -32,14 +33,12 @@ async function fetchUsers() {
 
         if (users.message != undefined) {
 
-            document.getElementById("error-toast-message").innerText = users.message + " Please try again later.";
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-            toastBootstrap.show();
+            showErrorToast(users.message + " Please try again later.");
+
         }
         else {
-            document.getElementById("error-toast-message").innerText = "No user found...";
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-            toastBootstrap.show()
+            showErrorToast("No user found...");
+
         }
 
         users = {
@@ -58,15 +57,12 @@ async function displayUsers() {
     const username = document.getElementById('username').value.trim();
 
     if (username == "") {
-        document.getElementById("error-toast-message").innerText = "Please enter valid username to search";
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-        toastBootstrap.show()
+        showErrorToast("Please enter valid username to search");
         return 0;
     }
     else {
 
-        usersElement.classList.add("d-none");
-
+        detailsElement.classList.add("d-none");
         loaderElement.classList.remove("d-none");
         paginationElement.innerHTML = '';
 
@@ -83,8 +79,10 @@ async function displayUsers() {
                    <a class="text-decoration-none" href="./view_repo.html?username=${data.login}">
                     <div 
                         style="border-radius: 20px; max-width: fit-content; background-color: #45434C; padding: 20px; margin: auto;">
-                        <img src="${data.avatar_url}" class="img-fluid" style="max-width: 100px; border-radius: 50%;"
-                            id="avatarImg" alt="avatar">
+                        <img src="${data.avatar_url}" class="img-fluid avatarImg" style="max-width: 100px; border-radius: 50%;display:none;"
+                             alt="avatarImg">
+                        <div class="loader imgLoader" style="display:block;"></div>
+                        
                     </div>
                     <h5 class="mt-2 name text-light" id="name">${data.name ?? data.login}</h5>
 
@@ -102,7 +100,31 @@ async function displayUsers() {
         usersElement.innerHTML = htmlStr;
 
         loaderElement.classList.add("d-none");
-        usersElement.classList.remove("d-none");
+        detailsElement.classList.remove("d-none");
+
+        const imagesDiv = document.getElementsByClassName('avatarImg');
+        const imgLoaderDiv = document.getElementsByClassName('imgLoader');
+        const imagesArray = Array.prototype.slice.call(imagesDiv);
+        console.log(imagesDiv.length, imgLoaderDiv, imagesArray)
+        imagesArray.forEach((ele, index) => {
+            const myImage = new Image();
+            console.log(ele, ele.src)
+            myImage.src = ele.src;
+            myImage.onload = function () {
+                console.log(ele)
+                imgLoaderDiv[index].style.display = "none"; // Hide the loader
+                ele.style.display = "block"; // Show the image
+            };
+
+            // Triggered if there is an error loading the image
+            myImage.onerror = function () {
+                console.error("Error loading image");
+                imgLoaderDiv[index].style.display = "none"; // Hide the loader
+                ele.style.display = "block"; // Show the image
+            };
+
+
+        })
 
 
 
@@ -177,12 +199,16 @@ function copyMyId() {
     displayUsers();
 }
 
-
-
 function setPerPage(select) {
     page = 1;
     perPage = select.value;
     displayUsers();
+}
+
+function showErrorToast(message) {
+    document.getElementById("error-toast-message").innerText = message;
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastBootstrap.show();
 }
 
 usernameInput.addEventListener('input', function () {
@@ -192,6 +218,8 @@ usernameInput.addEventListener('input', function () {
         displayUsers();
     }, 1500);
 });
+
+
 
 
 

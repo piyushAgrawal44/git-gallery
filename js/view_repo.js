@@ -40,10 +40,9 @@ function fetchUserDetails() {
 
         if (data.message !== undefined) {
 
-            document.getElementById("error-toast-message").innerText = data.message;
+            showErrorToast(data.message);
 
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-            toastBootstrap.show();
+
             loaderElement.classList.add("d-none");
             detailsElement.classList.add("d-none");
             noUserElement.classList.remove("d-none");
@@ -58,6 +57,19 @@ function fetchUserDetails() {
             document.getElementById('emailid').innerHTML = `<a data-bs-toggle="tooltip" data-bs-placement="top" title="${data.email}" class="text-decoration-none" href="mailto:${data.email}">${data.email ?? "NA"}</a>`;
             document.getElementById('githuburl').innerHTML = `<a data-bs-toggle="tooltip" data-bs-placement="top" title="${data.html_url}" class="text-decoration-none" href="${data.html_url}">@${data.login}</a>`;
             document.getElementById('location').innerHTML = `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${data.location}" class="text-decoration-none" >${data.location ?? "NA"}</span>`;
+
+            // img loader
+            document.getElementById('avatarImg').onload = function () {
+                document.getElementById('imgLoader').style.display = "none"; // Hide the loader
+                document.getElementById('avatarImg').style.display = "block"; // Show the image
+            };
+
+            // Triggered if there is an error loading the image
+            document.getElementById('avatarImg').onerror = function () {
+                console.error("Error loading image");
+                document.getElementById('imgLoader').style.display = "none"; // Hide the loader
+                document.getElementById('avatarImg').style.display = "block"; // Show the image
+            };
             // clean query search bar
             queryInput.value = "";
             // fetch repo
@@ -79,9 +91,8 @@ async function fetchRepos() {
 
     if (repos.message !== undefined) {
 
-        document.getElementById("error-toast-message").innerText = reposReference.message;
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-        toastBootstrap.show();
+        showErrorToast(repos.message);
+       
         repos = {
             total_count: 0,
             items: []
@@ -98,9 +109,7 @@ async function displayRepos() {
     const username = document.getElementById('username').value.trim();
 
     if (username == "") {
-        document.getElementById("error-toast-message").innerText = "Please enter valid username to search";
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-        toastBootstrap.show()
+        showErrorToast("Please enter valid username to search");
         return 0;
     }
     else {
@@ -163,16 +172,10 @@ async function totalRepos() {
         return userData.public_repos;
     } else {
         if (userData.message !== undefined) {
-
-            document.getElementById("error-toast-message").innerText = userData.message;
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-            toastBootstrap.show();
+            showErrorToast(userData.message);
         }
         else {
-            document.getElementById("error-toast-message").innerText = "Please enter valid username to search";
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-            toastBootstrap.show()
-
+            showErrorToast("Please enter valid username to search");
         }
         return 0;
     }
@@ -261,9 +264,8 @@ async function searchUserRepositories() {
             repos = searchData.items; // Returns an array of matching repositories
         } else {
             console.log(`Failed to perform repository search: ${searchData.message}`);
-            document.getElementById("error-toast-message").innerText = "Failed to perform repository search";
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-            toastBootstrap.show();
+
+            showErrorToast("Failed to perform repository search");
             repos = reposReference;
         }
     }
@@ -315,6 +317,12 @@ function setPerPage(select) {
     displayRepos();
 }
 
+function showErrorToast(message) {
+    document.getElementById("error-toast-message").innerText = message;
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastBootstrap.show();
+}
+
 usernameInput.addEventListener('input', function () {
     clearTimeout(typingTimer2);
     typingTimer2 = setTimeout(function () {
@@ -328,6 +336,3 @@ queryInput.addEventListener('input', function () {
         searchUserRepositories();
     }, 800);
 });
-
-
-

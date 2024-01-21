@@ -67,8 +67,9 @@ body {
     overflow-x: hidden;
 }
 
-.repos {
+.contentDiv {
     display: flex;
+    justify-content: start;
     flex-wrap: wrap;
     gap: 10px;
     width: fit-content;
@@ -114,6 +115,9 @@ body {
 
 
 @media (max-width:500px) {
+    .contentDiv{
+        justify-content: center;
+    }
     .repo{
         max-width: 100%;
     }
