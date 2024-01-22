@@ -104,14 +104,12 @@ async function displayUsers() {
 
         const imagesDiv = document.getElementsByClassName('avatarImg');
         const imgLoaderDiv = document.getElementsByClassName('imgLoader');
-        const imagesArray = Array.prototype.slice.call(imagesDiv);
-        console.log(imagesDiv.length, imgLoaderDiv, imagesArray)
+        const imagesArray = Array.from(imagesDiv);
         imagesArray.forEach((ele, index) => {
             const myImage = new Image();
-            console.log(ele, ele.src)
+            
             myImage.src = ele.src;
             myImage.onload = function () {
-                console.log(ele)
                 imgLoaderDiv[index].style.display = "none"; // Hide the loader
                 ele.style.display = "block"; // Show the image
             };
