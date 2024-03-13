@@ -5,7 +5,6 @@ Overview
 GitGallery is a web application that provides a curated gallery of GitHub repositories, allowing users to explore trending projects, frameworks, and tools. Using this website we can see the list of repo of a specific user and topics related to the repo. Along with this we can also see account description. This platform aims to help developers discover valuable open source code resources and stay updated with the latest trends in the coding community.
 
 Features
-Trending Repositories: Explore the hottest and most popular GitHub repositories.
 Project Categories: Find repositories categorized by projects, frameworks, and tools.
 Latest Updates: Stay informed with the latest developments and contributions in the coding community.
 
